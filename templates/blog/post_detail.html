@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    {% if post.image_url %}
+        <img src="{{ post.image_url }}" alt="Post Image" style="max-width: 100%;">
+    {% endif %}
+    <p><small>Published by {{ post.author }}</small></p>
+
+    <!-- Kiểm tra quyền để hiển thị nút Edit/Xóa -->
+    {% if user.is_authenticated %}
+        {% if user.userrole.role in 'collaborator editor' %}
+            <a href="{% url 'post-edit' post.id %}" class="btn edit">Edit</a>
+        {% endif %}
+        {% if user.userrole.role == 'editor' %}
+            <a href="{% url 'post-delete' post.id %}" class="btn delete">Delete</a>
+        {% endif %}
+    {% endif %}
+
+    <h3>Comments:</h3>
+    {% for comment in comments %}
+        <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <h3>Add a Comment</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> to add a comment.</p>
+    {% endif %}
+
+    <a href="{% url 'posts' %}">Back to All Posts</a>
+{% endblock %}

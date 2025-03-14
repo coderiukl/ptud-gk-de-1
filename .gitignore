@@ -1,0 +1,47 @@
+# Loại bỏ thư mục ảo môi trường Python (venv)
+venv/
+env/
+
+# Loại bỏ file của hệ thống IDE & code editor
+*.vscode/
+*.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Loại bỏ các file biên dịch Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Loại bỏ tệp migration cũ không cần thiết
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/__pycache__/
+
+
+# Loại bỏ logs & file debug
+*.log
+*.out
+*.err
+logs/
+debug.log
+
+# Loại bỏ file cài đặt môi trường (.env) chứa API keys, secrets
+.env
+*.env
+
+# Loại bỏ thư mục cache của Django
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Loại bỏ node_modules (nếu dự án có frontend)
+node_modules/
+
+# Loại bỏ các file Docker nếu có
+docker-compose.override.yml
+
+# Loại bỏ file chạy máy chủ Gunicorn
+gunicorn_error.log

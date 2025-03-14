@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <!-- Thanh điều hướng -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'posts' %}">My Blog</a>
+            </div>
+            <ul class="nav-links">
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'posts' %}">All Posts</a></li>
+                    <li><a href="{% url 'my_posts' %}">My Posts</a></li>
+                    <li><a href="{% url 'post-create' %}">New Post</a></li>
+                    <li><span class="user">Hi, {{ request.user.username | title }}</span></li>
+                    <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hiển thị thông báo -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-default{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Nội dung chính -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 My Blog | Designed by Nguyễn Hữu Phúc</p>
+    </footer>
+</body>
+</html>
