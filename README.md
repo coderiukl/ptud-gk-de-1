@@ -42,17 +42,12 @@ Mở terminal hoặc command prompt và chạy lệnh:
  git clone https://github.com/coderiukl/ptud-gk-de-1.git
 ```
 
-### 2️⃣ **Di chuyển vào thư mục dự án**
-```sh
- cd todo_project
-```
-
-### 3️⃣ **Tạo môi trường ảo (`venv`)**
+### 2️⃣ **Tạo môi trường ảo (`venv`)**
 ```sh
  python -m venv venv
 ```
 
-### 4️⃣ **Kích hoạt môi trường ảo**
+### 3️⃣ **Kích hoạt môi trường ảo**
 - **Windows:**
   ```sh
   ./venv/Scripts/Activate.ps1
@@ -62,18 +57,18 @@ Mở terminal hoặc command prompt và chạy lệnh:
   source venv/bin/activate
   ```
 
-### 5️⃣ **Cài đặt dependencies**
+### 4️⃣ **Cài đặt dependencies**
 ```sh
  pip install -r requirements.txt
 ```
 
-### 6️⃣ **Thiết lập database**
+### 5️⃣ **Thiết lập database**
 ```sh
  python manage.py makemigrations
  python manage.py migrate
 ```
 
-### 7️⃣ **Chạy ứng dụng**
+### 6️⃣ **Chạy ứng dụng**
 ```sh
  python manage.py runserver
 ```
