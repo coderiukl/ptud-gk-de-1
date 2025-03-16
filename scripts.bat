@@ -1,40 +1,66 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-echo 🚀 Đang khởi động Django Project...
+echo Starting Django Project...
 
-:: Kiểm tra và tạo virtual environment nếu chưa có
-if not exist "venv\" (
-    echo 🛠️ Đang tạo môi trường ảo (venv)...
+:: Check if Python is installed
+python --version >nul 2>&1
+if errorlevel 1 (
+    echo Error: Python is not installed!
+    exit /b
+)
+
+:: Check and create virtual environment if not exists
+if not exist "venv\Scripts\activate.bat" (
+    echo Creating virtual environment...
     python -m venv venv
 )
 
-:: Kích hoạt môi trường ảo
-echo 🔁 Kích hoạt môi trường ảo...
+:: Activate virtual environment
 call venv\Scripts\activate
 
-:: Cập nhật pip
-echo 📦 Đang cập nhật pip...
+:: Verify virtual environment activation
+if errorlevel 1 (
+    echo Error: Failed to activate virtual environment!
+    exit /b
+)
+
+:: Upgrade pip
+echo Updating pip...
 python -m pip install --upgrade pip
 
-:: Cài đặt các thư viện từ requirements.txt nếu có
+:: Install dependencies from requirements.txt
 if exist "requirements.txt" (
-    echo 📂 Đang cài đặt các thư viện...
+    echo Installing dependencies...
     pip install -r requirements.txt
 ) else (
-    echo ⚠️ Không tìm thấy requirements.txt! Đang cài đặt các thư viện cơ bản...
+    echo Warning: requirements.txt not found! Installing Django and DRF...
     pip install django djangorestframework
 )
 
-:: Chạy migrations
-echo 🛠️ Chạy migrate...
+:: Check if manage.py exists
+if not exist "manage.py" (
+    echo Error: manage.py not found! Please check your project directory.
+    exit /b
+)
+
+:: Run makemigrations
+echo Running makemigrations...
+python manage.py makemigrations
+
+:: Run migrate
+echo Running migrate...
 python manage.py migrate
 
-:: Khởi động server Django
-echo 🌍 Khởi động server Django...
-python manage.py runserver
+:: Start Django server
+echo Starting Django server...
+start /B python manage.py runserver
 
-echo ✅ Django đã sẵn sàng tại: http://127.0.0.1:8000/
+:: Open browser with localhost
+timeout /t 3 >nul
+start http://127.0.0.1:8000
+
+echo Django is running at: http://127.0.0.1:8000/
 
 endlocal
 pause
